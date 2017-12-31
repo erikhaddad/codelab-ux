@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Copyright 2015 Google Inc. All rights reserved.
+  Copyright 2018 Google Inc. All rights reserved.
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
@@ -29,7 +29,7 @@
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="application-name" content="FireEats">
-  <meta name="theme-color" content="#4285F4">
+  <meta name="theme-color" content="#ff3233">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -54,6 +54,37 @@
 <body>
 <div>
   <div class="header"></div>
+
+  <aside id="messages-permission" class="mdc-layout__content mdc-color--grey-100">
+    <div class="mdc-cell mdc-cell--12-col mdc-cell--12-col-tablet mdc-grid">
+
+      <!-- Container for the Table of content -->
+      <div class="mdc-card mdc-shadow--2dp mdc-cell mdc-cell--12-col mdc-cell--12-col-tablet mdc-cell--12-col-desktop">
+        <div class="mdc-card__supporting-text mdc-color-text--grey-600">
+          <!-- div to display the generated Instance ID token -->
+          <div id="token_div" style="display: none;">
+            <h4>Instance ID Token</h4>
+            <p id="token" style="word-break: break-all;"></p>
+            <button class="mdc-button mdc-js-button mdc-button--raised mdc-button--colored"
+                    onclick="deleteToken()">Delete Token</button>
+          </div>
+          <!-- div to display the UI to allow the request for permission to
+               notify the user. This is shown if the app has not yet been
+               granted permission to notify. -->
+          <div id="permission_div" style="display: none;">
+            <h4>Needs Permission</h4>
+            <p id="token"></p>
+            <button id="request-permission"
+                    class="mdc-button mdc-js-button mdc-button--raised mdc-button--colored">
+              Request Permission</button>
+          </div>
+          <!-- div to display messages received by this app. -->
+          <div id="messages"></div>
+        </div>
+      </div>
+
+    </div>
+  </aside>
 
   <main></main>
 
@@ -359,5 +390,6 @@
 <script src="/scripts/FireEats.View.js"></script>
 <script src="/scripts/FireEats.Mock.js"></script>
 <script src="/scripts/FireEats.Data.js"></script>
+<script src="/scripts/FireEats.Messaging.js"></script>
 </body>
 </html>

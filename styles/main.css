@@ -61,7 +61,11 @@ aside .material-icons {
 }
 
 #site-header, #filter {
-    background-color: #3367D6;
+    background-color: #ff3233;
+}
+
+#messages-permission {
+    margin-top: 96px;
 }
 
 #generic-header button {
@@ -341,11 +345,11 @@ main {
 }
 
 .mdc-textfield__label:after {
-    background-color: #0288d1;
+    background-color: #ff3233;
 }
 
 .mdc-textfield--floating-label.is-focused .mdc-textfield__label {
-    color: #0288d1;
+    color: #ff3233;
 }
 
 .mdc-button .material-icons {
