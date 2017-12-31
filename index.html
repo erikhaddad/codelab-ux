@@ -55,7 +55,7 @@
 <div>
   <div class="header"></div>
 
-  <aside id="messages-permission" class="mdc-layout__content mdc-color--grey-100">
+  <aside id="messages-banner" class="mdc-layout__content mdc-color--grey-100">
     <div class="mdc-cell mdc-cell--12-col mdc-cell--12-col-tablet mdc-grid">
 
       <!-- Container for the Table of content -->
@@ -65,8 +65,10 @@
           <div id="token_div" style="display: none;">
             <h4>Instance ID Token</h4>
             <p id="token" style="word-break: break-all;"></p>
-            <button class="mdc-button mdc-js-button mdc-button--raised mdc-button--colored"
-                    onclick="deleteToken()">Delete Token</button>
+            <button id="delete-token"
+                    class="mdc-button mdc-js-button mdc-button--raised mdc-button--colored">Delete Token</button>
+
+            <button id="dismiss-banner" class="mdc-button">Dismiss</button>
           </div>
           <!-- div to display the UI to allow the request for permission to
                notify the user. This is shown if the app has not yet been

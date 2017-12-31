@@ -154,15 +154,28 @@ FireEats.prototype.updateUIForPushEnabled = function (currentToken) {
     this.showHideDiv(this.tokenDivId, true);
     this.showHideDiv(this.permissionDivId, false);
     this.showToken(currentToken);
+
+    const deleteTokenBtn = document.querySelector('#delete-token');
+    const msgsBannerDivId = 'messages-banner';
+    const dismissBannerBtn = document.querySelector('#dismiss-banner');
+
+    deleteTokenBtn.addEventListener('click', event => {
+        this.deleteToken();
+    });
+
+    dismissBannerBtn.addEventListener('click', event => {
+        console.log('hello');
+        this.showHideDiv(msgsBannerDivId, false);
+    });
 };
 
 FireEats.prototype.updateUIForPushPermissionRequired = function () {
     this.showHideDiv(this.tokenDivId, false);
     this.showHideDiv(this.permissionDivId, true);
 
-    const button = document.querySelector('#messages-permission')
+    const reqPermBtn = document.querySelector('#request-permission');
 
-    button.addEventListener('click', event => {
+    reqPermBtn.addEventListener('click', event => {
         this.requestPermission();
     });
 };

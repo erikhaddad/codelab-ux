@@ -185,63 +185,73 @@ FireEats.prototype.initFilterDialog = function () {
 
     const dialog = document.querySelector('aside');
     const pages = dialog.querySelectorAll('.page');
+    const categoryList = dialog.querySelector('#category-list');
+    const citiesList = dialog.querySelector('#city-list');
+    const allFiltersList = dialog.querySelector('#all-filters-list');
 
-    this.replaceElement(
-        dialog.querySelector('#category-list'),
-        this.renderTemplate('item-list', {items: ['Any'].concat(this.data.categories)})
-    );
-
-    this.replaceElement(
-        dialog.querySelector('#city-list'),
-        this.renderTemplate('item-list', {items: ['Any'].concat(this.data.cities)})
-    );
-
-    const renderAllList = () => {
+    if (categoryList) {
         this.replaceElement(
-            dialog.querySelector('#all-filters-list'),
-            this.renderTemplate('all-filters-list', this.filters)
+            categoryList,
+            this.renderTemplate('item-list', {items: ['Any'].concat(this.data.categories)})
         );
+    }
 
-        dialog.querySelectorAll('#page-all .mdc-list-item').forEach(el => {
-            el.addEventListener('click', () => {
-                const id = el.id.split('-').slice(1).join('-');
-                displaySection(id);
+    if (citiesList) {
+        this.replaceElement(
+            citiesList,
+            this.renderTemplate('item-list', {items: ['Any'].concat(this.data.cities)})
+        );
+    }
+
+    if (allFiltersList) {
+        const renderAllList = () => {
+            this.replaceElement(
+                allFiltersList,
+                this.renderTemplate('all-filters-list', this.filters)
+            );
+
+            dialog.querySelectorAll('#page-all .mdc-list-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    const id = el.id.split('-').slice(1).join('-');
+                    displaySection(id);
+                });
             });
-        });
-    };
+        };
 
-    const displaySection = id => {
-        if (id === 'page-all') {
-            renderAllList();
-        }
+        const displaySection = id => {
+            if (id === 'page-all') {
+                renderAllList();
+            }
+
+            pages.forEach(sel => {
+                if (sel.id === id) {
+                    sel.style.display = 'block';
+                } else {
+                    sel.style.display = 'none';
+                }
+            });
+        };
 
         pages.forEach(sel => {
-            if (sel.id === id) {
-                sel.style.display = 'block';
-            } else {
-                sel.style.display = 'none';
-            }
+            const type = sel.id.split('-')[1];
+            if (type === 'all') return;
+
+            sel.querySelectorAll('.mdc-list-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    this.filters[type] = el.innerText.trim() === 'Any' ? '' : el.innerText.trim();
+                    displaySection('page-all');
+                });
+            });
         });
-    };
 
-    pages.forEach(sel => {
-        const type = sel.id.split('-')[1];
-        if (type === 'all') return;
-
-        sel.querySelectorAll('.mdc-list-item').forEach(el => {
+        displaySection('page-all');
+        dialog.querySelectorAll('.back').forEach(el => {
             el.addEventListener('click', () => {
-                this.filters[type] = el.innerText.trim() === 'Any' ? '' : el.innerText.trim();
                 displaySection('page-all');
             });
         });
-    });
+    }
 
-    displaySection('page-all');
-    dialog.querySelectorAll('.back').forEach(el => {
-        el.addEventListener('click', () => {
-            displaySection('page-all');
-        });
-    });
 };
 
 FireEats.prototype.updateQuery = function (filters) {
