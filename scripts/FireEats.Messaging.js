@@ -65,11 +65,18 @@ FireEats.prototype.sendTokenToServer = function (currentToken) {
 };
 
 FireEats.prototype.isTokenSentToServer = function () {
-    return window.localStorage.getItem('sentToServer') === 1;
+    return window.localStorage.getItem('sentToServer') === '1';
 };
 
 FireEats.prototype.setTokenSentToServer = function (sent) {
     window.localStorage.setItem('sentToServer', sent ? 1 : 0);
+};
+
+FireEats.prototype.isTokenBannerDismissed = function () {
+    return window.localStorage.getItem('tokenBannerDismissed') === '1';
+};
+FireEats.prototype.setTokenBannerDismissed = function (dismissed) {
+    window.localStorage.setItem('tokenBannerDismissed', dismissed ? 1 : 0);
 };
 
 FireEats.prototype.showHideDiv = function (divId, show) {
@@ -96,7 +103,7 @@ FireEats.prototype.requestPermission = function () {
             this.resetUI();
             // [END_EXCLUDE]
         })
-        .catch(function(err) {
+        .catch(err => {
             console.log('Unable to get permission to notify.', err);
         });
     // [END request_permission]
@@ -108,7 +115,7 @@ FireEats.prototype.deleteToken = function () {
     this.messaging.getToken()
         .then(currentToken => {
             this.messaging.deleteToken(currentToken)
-                .then(function() {
+                .then(() => {
                     console.log('Token deleted.');
                     this.setTokenSentToServer(false);
                     // [START_EXCLUDE]
@@ -116,12 +123,12 @@ FireEats.prototype.deleteToken = function () {
                     this.resetUI();
                     // [END_EXCLUDE]
                 })
-                .catch(function(err) {
+                .catch(err => {
                     console.log('Unable to delete token. ', err);
                 });
             // [END delete_token]
         })
-        .catch(function(err) {
+        .catch(err => {
             console.log('Error retrieving Instance ID token. ', err);
             this.showToken('Error retrieving Instance ID token. ', err);
         });
@@ -136,7 +143,7 @@ FireEats.prototype.appendMessage = function (payload) {
     dataElement.style = 'overflow-x:hidden;';
     dataHeaderElement.textContent = 'Received message:';
     dataElement.textContent = JSON.stringify(payload, null, 2);
-    messagesElement.appendChild(dataHeaderELement);
+    messagesElement.appendChild(dataHeaderElement);
     messagesElement.appendChild(dataElement);
 };
 
@@ -151,12 +158,17 @@ FireEats.prototype.clearMessages = function () {
 };
 
 FireEats.prototype.updateUIForPushEnabled = function (currentToken) {
+    console.log('updateUIForPushEnabled', this.isTokenBannerDismissed());
+    const msgsBannerDivId = 'messages-banner';
+    if (this.isTokenBannerDismissed()) {
+        this.showHideDiv(msgsBannerDivId, false);
+    }
+
     this.showHideDiv(this.tokenDivId, true);
     this.showHideDiv(this.permissionDivId, false);
     this.showToken(currentToken);
 
     const deleteTokenBtn = document.querySelector('#delete-token');
-    const msgsBannerDivId = 'messages-banner';
     const dismissBannerBtn = document.querySelector('#dismiss-banner');
 
     deleteTokenBtn.addEventListener('click', event => {
@@ -164,12 +176,18 @@ FireEats.prototype.updateUIForPushEnabled = function (currentToken) {
     });
 
     dismissBannerBtn.addEventListener('click', event => {
-        console.log('hello');
         this.showHideDiv(msgsBannerDivId, false);
+        this.setTokenBannerDismissed(true);
     });
 };
 
 FireEats.prototype.updateUIForPushPermissionRequired = function () {
+    console.log('updateUIForPushPermissionRequired', this.isTokenBannerDismissed());
+    const msgsBannerDivId = 'messages-banner';
+    if (this.isTokenBannerDismissed()) {
+        this.showHideDiv(msgsBannerDivId, true);
+    }
+
     this.showHideDiv(this.tokenDivId, false);
     this.showHideDiv(this.permissionDivId, true);
 
