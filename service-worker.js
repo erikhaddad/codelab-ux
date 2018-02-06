@@ -25,6 +25,7 @@ const filesToCache = [
     '/scripts/FireEats.Messaging.js',
     '/scripts/FireEats.Mock.js',
     '/scripts/FireEats.View.js',
+    '/images/icons/favicon-192x192.png',
     '/images/icons/fireeats-192x192.png',
     '/images/favicon.ico',
     '/images/firebase-logo.png',

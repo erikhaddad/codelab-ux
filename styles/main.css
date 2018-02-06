@@ -545,8 +545,7 @@ b.light {
 }
 
 #restaurant-header #rating .material-icons {
-    color: white;
-    font-size: 20px;
+    color: #FFF;
     position: relative;
     top: 0;
     font-size: 18px;
