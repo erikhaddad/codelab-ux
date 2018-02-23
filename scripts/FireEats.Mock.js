@@ -30,7 +30,7 @@ FireEats.prototype.addMockRestaurants = function() {
     let city = this.getRandomItem(this.data.cities);
     let price = Math.floor(Math.random() * 4) + 1;
     let photoID = Math.floor(Math.random() * 22) + 1;
-    let photo = `https://storage.googleapis.com/firestorequickstarts.appspot.com/food_${photoID}.png`;
+    let photo = `https://storage.googleapis.com/codelab-ux.appspot.com/food_${photoID}.png`;
     let numRatings = 0;
     let avgRating = 0;
 
